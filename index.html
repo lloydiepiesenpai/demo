@@ -72,7 +72,9 @@
     .buttons {
       display: flex;
       gap: 15px;
-      margin-top: 10px;
+      margin-top: 20px;
+      position: relative;
+      z-index: 2;
     }
 
     button {
@@ -163,8 +165,8 @@
   <!-- Popup for "Sure" -->
   <div class="popup" id="popupSure">
     <img src="catwithgun2.webp" alt="Cry Image">
-    <p>Sure ka na? Kilalanin mo binabangga mo.</p>
-    <button id="resetBtn">Pagisipan mo ulit XD</button>
+    <p>Sure ka na ba? Kilalanin mo binabangga mo. HAHAHA</p>
+    <button id="resetBtn">Pagisipan mo ulit XD. PLEASE T_T</button>
   </div>
 
   <!-- Popup for "No" -->
@@ -189,6 +191,8 @@
     const popupSure = document.getElementById('popupSure');
     const popupNo = document.getElementById('popupNo');
 
+    let attempts = 0; // Track the number of attempts for the "Ayaw" button
+
     // Show popup for "Sige"
     sigeBtn.addEventListener('click', function() {
       closeAllPopups();
@@ -203,7 +207,11 @@
     // Show popup for "Ayaw"
     ayawBtn.addEventListener('click', function() {
       closeAllPopups();
-      popupAyaw.style.display = 'block';
+      moveAyawButton(); // Move the "Ayaw" button on each click
+
+      if (attempts >= 3) {
+        popupAyaw.style.display = 'block'; // Show the "Ayaw" popup only after 3 clicks
+      }
     });
 
     // From "Ayaw" - Click "Sure"
@@ -233,6 +241,19 @@
       popupAyaw.style.display = 'none';
       popupSure.style.display = 'none';
       popupNo.style.display = 'none';
+    }
+
+    function moveAyawButton() {
+      const moveDistance = 40; // How far the button will move
+      const currentX = parseInt(ayawBtn.style.left || 0);
+      const currentY = parseInt(ayawBtn.style.top || 0);
+
+      // Move the "Ayaw" button a bit with each click
+      ayawBtn.style.position = 'relative';
+      ayawBtn.style.left = (currentX + moveDistance) + 'px'; // Move right
+      ayawBtn.style.top = (currentY + moveDistance) + 'px'; // Move down
+
+      attempts++; // Increment attempts after each click
     }
   </script>
 
