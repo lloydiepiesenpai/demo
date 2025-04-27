@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Heart with Message and Buttons</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    .heart-container {
+      position: relative;
+      width: 160px;
+      height: 140px;
+      margin-bottom: 40px;
+    }
+
+    .heart {
+      width: 100%;
+      height: 100%;
+      background-color: red;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: rotate(-45deg);
+      border-radius: 15px;
+      z-index: 1;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      background-color: red;
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .heart::before {
+      width: 140px;
+      height: 140px;
+      top: -70px;
+      left: 0;
+    }
+
+    .heart::after {
+      width: 140px;
+      height: 140px;
+      top: 0;
+      left: 70px;
+    }
+
+    .heart-text {
+      position: relative;
+      z-index: 2;
+      transform: rotate(0deg);
+      color: white;
+      text-align: center;
+      padding: 5px;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 1.3;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 8px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      background-color: #ff4d4d;
+      color: white;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #e60000;
+    }
+
+    /* Pop-up Styles */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      z-index: 10;
+      max-width: 400px;
+      width: 80%;
+    }
+
+    .popup img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .popup button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .popup button:hover {
+      background-color: #e60000;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="heart-container">
+    <div class="heart"></div>
+    <div class="heart-text">
+      Labas tayo sa<br>May 16, 2025<br>my Threat.
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button id="sigeBtn">Sige</button>
+    <button id="ayawBtn">Ayaw</button>
+  </div>
+
+  <!-- Popup for "Sige" -->
+  <div class="popup" id="popupSige">
+    <img src="cats heartsu.jpg" alt="Date Image">
+    <p>Yatta desu ne, It's a date then <3</p>
+    <button id="seeYouBtn">See you soon, Chat kita later.</button>
+  </div>
+
+  <!-- Popup for "Ayaw" -->
+  <div class="popup" id="popupAyaw">
+    <img src="john_cena_meme.jpg" alt="No Date Image">
+    <p>Hmm, Ayaw mo ba talaga? 😅</p>
+    <button id="sureBtn">Sure</button>
+    <button id="noBtn">No</button>
+  </div>
+
+  <!-- Popup for "Sure" -->
+  <div class="popup" id="popupSure">
+    <img src="catwithgun2.webp" alt="Cry Image">
+    <p>Sure ka na? Kilalanin mo binabangga mo.</p>
+    <button id="resetBtn">Pagisipan mo ulit XD</button>
+  </div>
+
+  <!-- Popup for "No" -->
+  <div class="popup" id="popupNo">
+    <img src="Shrek.webp" alt="Indecisive Image">
+    <p>Indecisive din gusto kita este gusto ko yan XD.</p>
+    <button id="backToSigeBtn">Balik ka na click mo yung Sige</button>
+  </div>
+
+  <script>
+    // Get elements
+    const sigeBtn = document.getElementById('sigeBtn');
+    const ayawBtn = document.getElementById('ayawBtn');
+    const seeYouBtn = document.getElementById('seeYouBtn');
+    const sureBtn = document.getElementById('sureBtn');
+    const noBtn = document.getElementById('noBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const backToSigeBtn = document.getElementById('backToSigeBtn');
+
+    const popupSige = document.getElementById('popupSige');
+    const popupAyaw = document.getElementById('popupAyaw');
+    const popupSure = document.getElementById('popupSure');
+    const popupNo = document.getElementById('popupNo');
+
+    // Show popup for "Sige"
+    sigeBtn.addEventListener('click', function() {
+      closeAllPopups();
+      popupSige.style.display = 'block';
+    });
+
+    // Hide "Sige" popup
+    seeYouBtn.addEventListener('click', function() {
+      popupSige.style.display = 'none';
+    });
+
+    // Show popup for "Ayaw"
+    ayawBtn.addEventListener('click', function() {
+      closeAllPopups();
+      popupAyaw.style.display = 'block';
+    });
+
+    // From "Ayaw" - Click "Sure"
+    sureBtn.addEventListener('click', function() {
+      popupAyaw.style.display = 'none';
+      popupSure.style.display = 'block';
+    });
+
+    // From "Ayaw" - Click "No"
+    noBtn.addEventListener('click', function() {
+      popupAyaw.style.display = 'none';
+      popupNo.style.display = 'block';
+    });
+
+    // From "Sure" - Click "Pagisipan mo ulit XD"
+    resetBtn.addEventListener('click', function() {
+      closeAllPopups();
+    });
+
+    // From "No" - Click "Balik ka na click mo yung Sige"
+    backToSigeBtn.addEventListener('click', function() {
+      closeAllPopups();
+    });
+
+    function closeAllPopups() {
+      popupSige.style.display = 'none';
+      popupAyaw.style.display = 'none';
+      popupSure.style.display = 'none';
+      popupNo.style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>
